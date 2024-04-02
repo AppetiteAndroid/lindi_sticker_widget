@@ -21,8 +21,7 @@ class LindiStickerWidget extends StatefulWidget {
 
   /// Constructor to initialize the widget with a controller and a child widget.
   ///
-  LindiStickerWidget({Key? key, required this.controller, required this.child})
-      : super(key: key);
+  LindiStickerWidget({Key? key, required this.controller, required this.child}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _LindiStickerWidgetState();
@@ -32,10 +31,18 @@ class _LindiStickerWidgetState extends State<LindiStickerWidget> {
   @override
   void initState() {
     // Add a listener to the controller to update the widget when the controller changes.
-    widget.controller.addListener(() {
-      setState(() {});
-    });
+    widget.controller.addListener(listener);
     super.initState();
+  }
+
+  void listener() {
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(listener);
+    super.dispose();
   }
 
   @override
@@ -53,8 +60,7 @@ class _LindiStickerWidgetState extends State<LindiStickerWidget> {
             child: Stack(
               children: [
                 // Create draggable widgets from the controller's list and add them to the stack.
-                for (int i = 0; i < widget.controller.widgets.length; i++)
-                  widget.controller.widgets[i]
+                for (int i = 0; i < widget.controller.widgets.length; i++) widget.controller.widgets[i]
               ],
             ),
           )
